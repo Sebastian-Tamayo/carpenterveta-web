@@ -1,0 +1,134 @@
+---
+import { WHATSAPP_CTA_URL, WHATSAPP_PHONE_DISPLAY } from "../lib/whatsapp";
+---
+
+<section class="contact section" id="contacto" aria-labelledby="contacto-title">
+  <div class="wrap contact__grid">
+    <div class="contact__copy reveal">
+      <span class="section__eyebrow">Presupuesto</span>
+      <h2 class="section__title" id="contacto-title">Solicita tu presupuesto cerrado.</h2>
+      <p class="section__lead">
+        Escríbenos por WhatsApp: cuéntanos el espacio y el tipo de proyecto. Te respondemos con el siguiente paso — medición técnica o propuesta.
+      </p>
+      <dl class="contact__facts">
+        <div>
+          <dt>Zona de trabajo</dt>
+          <dd>Proyectos a medida con visita técnica en tu domicilio</dd>
+        </div>
+        <div>
+          <dt>Respuesta</dt>
+          <dd>Directo por WhatsApp, sin formularios intermedios</dd>
+        </div>
+        <div>
+          <dt>Sin compromiso</dt>
+          <dd>La consulta inicial no implica contratación</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="contact__cta reveal">
+      <p class="contact__cta-label">WhatsApp</p>
+      <p class="contact__cta-phone">{WHATSAPP_PHONE_DISPLAY}</p>
+      <p class="contact__cta-text">
+        Abre una conversación con el mensaje preparado. En menos de un minuto nos cuentas tu proyecto.
+      </p>
+      <a
+        class="btn"
+        href={WHATSAPP_CTA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Solicitar presupuesto
+      </a>
+      <p class="contact__note">
+        Al contactar aceptas que usemos tus datos solo para responder a esta solicitud. No cedemos datos a terceros.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-bottom: var(--space-7);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .contact__facts {
+    margin: var(--space-4) 0 0;
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  .contact__facts div {
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .contact__facts dt {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.35rem;
+  }
+
+  .contact__facts dd {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .contact__cta {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+  }
+
+  .contact__cta-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .contact__cta-phone {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  .contact__cta-text {
+    margin: 0;
+    color: var(--text-muted);
+    max-width: 36ch;
+  }
+
+  .contact__note {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 800px) {
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,19 @@
+# build
+dist/
+.astro/
+
+# assets descargados de Directus en el build
+public/media/
+
+# dependencies
+node_modules/
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs / OS
+npm-debug.log*
+.DS_Store
+Thumbs.db

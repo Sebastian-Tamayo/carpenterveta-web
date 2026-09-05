@@ -1,0 +1,110 @@
+---
+import { fetchFaq } from "../lib/directus";
+
+const faqs = await fetchFaq();
+---
+
+<section class="faq section" id="preguntas" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <header class="faq__intro reveal">
+      <span class="section__eyebrow">Preguntas</span>
+      <h2 class="section__title" id="faq-title">Respuestas antes de escribirnos.</h2>
+      <p class="section__lead">
+        Plazos, zona de servicio y garantías — lo habitual antes de encargar un proyecto a medida. Si tu caso es distinto, escríbenos por WhatsApp.
+      </p>
+    </header>
+
+    {
+      faqs.length > 0 ? (
+        <div class="faq__list">
+          {faqs.map((item, index) => (
+            <details class="faq__item reveal" style={`--i: ${index}`} name="faq">
+              <summary>{item.pregunta}</summary>
+              <div class="faq__answer" set:html={item.respuesta} />
+            </details>
+          ))}
+        </div>
+      ) : (
+        <p class="faq__empty reveal" role="status">
+          Aún no hay preguntas publicadas. Vuelve en unos minutos o contáctanos por WhatsApp.
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .faq__list {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--line);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  .faq__item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 2.5rem 1.25rem 0;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    position: relative;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__item summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 1.15rem;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--brass);
+    line-height: 1;
+  }
+
+  .faq__item[open] summary::after {
+    content: "–";
+  }
+
+  .faq__answer {
+    margin: 0;
+    padding: 0 0 1.35rem;
+    color: var(--text-muted);
+    max-width: 52ch;
+  }
+
+  .faq__answer :global(p) {
+    margin: 0 0 0.75rem;
+  }
+
+  .faq__answer :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .faq__empty {
+    margin: 0;
+    color: var(--text-muted);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  @media (max-width: 800px) {
+    .faq__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

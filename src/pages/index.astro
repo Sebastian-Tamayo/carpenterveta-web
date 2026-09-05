@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import Services from "../components/Services.astro";
+import Process from "../components/Process.astro";
+import Workshop from "../components/Workshop.astro";
+import FAQ from "../components/FAQ.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="CarpenterVeta — Ingeniería y artesanía en madera | Proyectos a medida"
+  description="Proyectos a medida sin sorpresas: medición por técnicos, presupuesto cerrado y fabricación propia. Armarios, muebles y carpintería profesional."
+>
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <TrustBar />
+    <Services />
+    <Process />
+    <Workshop />
+    <FAQ />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

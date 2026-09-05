@@ -1,0 +1,143 @@
+---
+import { fetchServicios } from "../lib/directus";
+
+const services = await fetchServicios();
+---
+
+<section class="services section" id="servicios" aria-labelledby="servicios-title">
+  <div class="wrap">
+    <header class="services__intro reveal">
+      <span class="section__eyebrow">Servicios</span>
+      <h2 class="section__title" id="servicios-title">Proyectos a medida con un solo estándar.</h2>
+      <p class="section__lead">
+        Elige el tipo de trabajo. Te guiamos en material, plazos y presupuesto cerrado — sin tecnicismos innecesarios.
+      </p>
+    </header>
+
+    {
+      services.length > 0 ? (
+        <div class="services__list">
+          {services.map((service, index) => (
+            <article
+              class="service reveal"
+              id={`servicio-${service.id}`}
+              style={`--i: ${index}`}
+            >
+              <div class="service__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+              <div class="service__body">
+                <h3>{service.titulo}</h3>
+                {service.descripcion ? (
+                  <div class="service__desc" set:html={service.descripcion} />
+                ) : null}
+              </div>
+              {service.imagenUrl ? (
+                <div class="service__media">
+                  <img
+                    src={service.imagenUrl}
+                    alt={service.titulo}
+                    width="640"
+                    height="480"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="services__empty reveal" role="status">
+          No hay servicios publicados ahora mismo. Vuelve a intentarlo en unos minutos.
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .services__intro {
+    margin-bottom: var(--space-5);
+  }
+
+  .services__list {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .service {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr minmax(10rem, 16rem);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: start;
+    padding-block: clamp(2rem, 4vw, 3.25rem);
+    border-bottom: 1px solid var(--line);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  .service:not(:has(.service__media)) {
+    grid-template-columns: 5.5rem 1fr;
+  }
+
+  .service__index {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: var(--brass);
+    padding-top: 0.35rem;
+  }
+
+  .service__body h3 {
+    font-size: clamp(1.45rem, 2vw + 0.8rem, 2rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .service__desc {
+    color: var(--text-muted);
+    max-width: 58ch;
+  }
+
+  .service__desc :global(p) {
+    margin: 0 0 0.75rem;
+  }
+
+  .service__desc :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .service__media {
+    overflow: hidden;
+    border-radius: var(--radius);
+    aspect-ratio: 4 / 3;
+    background: var(--line);
+  }
+
+  .service__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .services__empty {
+    color: var(--text-muted);
+    margin: 0;
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  @media (max-width: 800px) {
+    .service,
+    .service:not(:has(.service__media)) {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .service__media {
+      max-width: 22rem;
+    }
+  }
+</style>

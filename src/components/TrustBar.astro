@@ -1,0 +1,59 @@
+---
+const trust = [
+  { label: "Fabricación propia", detail: "Control de calidad en nuestro taller" },
+  { label: "Medición por técnicos", detail: "Toma de medidas real en domicilio" },
+  { label: "Presupuesto cerrado", detail: "Materiales y plazos por escrito" },
+];
+---
+
+<section class="trust" aria-label="Garantías CarpenterVeta">
+  <div class="wrap trust__row">
+    {
+      trust.map((item) => (
+        <p class="trust__item">
+          <strong>{item.label}</strong>
+          <span>{item.detail}</span>
+        </p>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .trust {
+    background: var(--forest);
+    color: #e8ebe6;
+    padding-block: 1.35rem;
+  }
+
+  .trust__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .trust__item {
+    margin: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .trust__item strong {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .trust__item span {
+    font-size: 0.9rem;
+    opacity: 0.72;
+  }
+
+  @media (max-width: 720px) {
+    .trust__row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

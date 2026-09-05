@@ -1,0 +1,290 @@
+---
+import { fetchVideos } from "../lib/directus";
+import { socialLinks } from "../lib/social";
+import SocialIcon from "./SocialIcon.astro";
+
+const videos = await fetchVideos();
+---
+
+<section class="taller section" id="taller" aria-labelledby="taller-title">
+  <div class="wrap taller__grid">
+    <div class="taller__copy reveal">
+      <span class="section__eyebrow">El Taller</span>
+      <h2 class="section__title" id="taller-title">Mira cómo nace cada pieza.</h2>
+      <p class="section__lead">
+        Reels y grabaciones del proceso: transparencia real sobre materiales, cortes y acabados. Reproduce aquí mismo, sin salir de la web.
+      </p>
+      <ul class="taller__social">
+        {
+          socialLinks.map((item) => (
+            <li>
+              <a href={item.href} rel="noopener noreferrer" target="_blank">
+                <span class="taller__social-main">
+                  <SocialIcon network={item.id} class="taller__icon" />
+                  <span>{item.label}</span>
+                </span>
+                <span class="taller__handle">{item.handle}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="taller__stage reveal">
+      {
+        videos.length > 0 ? (
+          <ul class="taller__videos">
+            {videos.map((video) => (
+              <li class="taller__video">
+                {video.titulo ? <h3 class="taller__video-title">{video.titulo}</h3> : null}
+                {video.descripcion ? (
+                  <p class="taller__video-desc">{video.descripcion}</p>
+                ) : null}
+                <div class="taller__embed">
+                  {/* Embed oficial Instagram: Reel reproducible in-page */}
+                  <blockquote
+                    class="instagram-media"
+                    data-instgrm-permalink={video.permalink}
+                    data-instgrm-version="14"
+                    style="background:#0b0e0c; border:0; margin:0; max-width:100%; width:100%; min-width:0;"
+                  >
+                    <a href={video.permalink} target="_blank" rel="noopener noreferrer">
+                      {video.titulo}
+                    </a>
+                  </blockquote>
+                  <iframe
+                    src={video.embedUrl}
+                    title={video.titulo}
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowfullscreen
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <figure class="taller__placeholder">
+            <img
+              src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1600&q=80"
+              alt="Bancada de taller con herramientas y madera en proceso"
+              width="1600"
+              height="1067"
+              loading="lazy"
+            />
+            <figcaption>
+              <span class="taller__badge">Próximamente en vídeo</span>
+              <p>
+                Cuando publiques vídeos en Directus aparecerán aquí como Reels reproducibles. Mientras tanto, síguenos en Instagram y TikTok.
+              </p>
+            </figcaption>
+          </figure>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+{videos.length > 0 ? (
+  <>
+    <script is:inline src="https://www.instagram.com/embed.js" async></script>
+    <script>
+      const processEmbeds = () => {
+        const api = (
+          window as unknown as {
+            instgrm?: { Embeds?: { process?: () => void } };
+          }
+        ).instgrm;
+        api?.Embeds?.process?.();
+      };
+      processEmbeds();
+      document
+        .querySelectorAll('script[src*="instagram.com/embed.js"]')
+        .forEach((s) => s.addEventListener("load", processEmbeds));
+      window.setTimeout(processEmbeds, 600);
+    </script>
+  </>
+) : null}
+
+<style>
+  .taller {
+    background: var(--ink);
+    color: #e8ebe6;
+  }
+
+  .taller .section__title,
+  .taller .section__eyebrow {
+    color: #f2f4f0;
+  }
+
+  .taller .section__eyebrow {
+    color: var(--brass-soft);
+  }
+
+  .taller .section__lead {
+    color: rgba(232, 235, 230, 0.72);
+  }
+
+  .taller__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .taller__social {
+    list-style: none;
+    margin-top: var(--space-4);
+    display: grid;
+    gap: 0.35rem;
+    border-top: 1px solid rgba(242, 244, 240, 0.14);
+    padding-top: 1.25rem;
+  }
+
+  .taller__social a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(242, 244, 240, 0.1);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #f2f4f0;
+  }
+
+  .taller__social a:hover {
+    color: var(--brass-soft);
+  }
+
+  .taller__social-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .taller__icon {
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+
+  .taller__handle {
+    font-family: var(--font-body);
+    font-weight: 500;
+    opacity: 0.65;
+  }
+
+  .taller__stage {
+    min-width: 0;
+  }
+
+  .taller__videos {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .taller__video-title {
+    font-size: 1.05rem;
+    color: #f2f4f0;
+    margin: 0 0 0.35rem;
+  }
+
+  .taller__video-desc {
+    margin: 0 0 0.85rem;
+    font-size: 0.92rem;
+    color: rgba(232, 235, 230, 0.68);
+  }
+
+  .taller__embed {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 9 / 16;
+    max-height: 34rem;
+    overflow: hidden;
+    background: #0b0e0c;
+    border: 1px solid rgba(242, 244, 240, 0.12);
+  }
+
+  .taller__embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    z-index: 1;
+  }
+
+  .taller__embed :global(blockquote.instagram-media) {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    margin: 0 !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    background: #0b0e0c !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Si embed.js inserta su propio iframe dentro del blockquote, usamos ese */
+  .taller__embed:has(blockquote iframe) > iframe {
+    display: none;
+  }
+
+  .taller__embed:has(blockquote iframe) :global(blockquote.instagram-media) {
+    z-index: 2;
+  }
+
+  .taller__placeholder {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #0b0e0c;
+    border: 1px solid rgba(242, 244, 240, 0.12);
+  }
+
+  .taller__placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+
+  .taller__placeholder figcaption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 1.35rem 1.5rem 1.5rem;
+    background: linear-gradient(180deg, transparent, rgba(11, 14, 12, 0.92) 35%);
+  }
+
+  .taller__badge {
+    display: inline-block;
+    margin-bottom: 0.55rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-soft);
+  }
+
+  .taller__placeholder p {
+    margin: 0;
+    max-width: 42ch;
+    font-size: 0.95rem;
+    color: rgba(242, 244, 240, 0.82);
+  }
+
+  @media (max-width: 860px) {
+    .taller__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

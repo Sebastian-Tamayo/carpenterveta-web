@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Services from "../components/Services.astro";
+import Contact from "../components/Contact.astro";
+---
+
+<BaseLayout
+  title="Servicios — CarpenterVeta"
+  description="Armarios empotrados, muebles en madera maciza y carpintería con derivados de la madera. Fabricación propia y presupuesto cerrado."
+  canonical="/servicios"
+>
+  <Header tone="light" />
+  <main id="contenido">
+    <header class="page-hero wrap">
+      <span class="section__eyebrow">Servicios</span>
+      <h1 class="section__title">Carpintería a medida, explicada con claridad.</h1>
+      <p class="section__lead">
+        Líneas de trabajo para cubrir desde el armario del dormitorio hasta la pieza singular en madera maciza.
+      </p>
+    </header>
+    <Services />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: calc(var(--header-h) + 3.5rem);
+    padding-bottom: var(--space-4);
+  }
+
+  .page-hero .section__title {
+    max-width: 16ch;
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+import { socialLinks } from "../lib/social";
+import SocialIcon from "./SocialIcon.astro";
+import {
+  WHATSAPP_CTA_URL,
+  WHATSAPP_PHONE_DISPLAY,
+  WHATSAPP_PHONE_TEL,
+} from "../lib/whatsapp";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="site-footer__logo">CarpenterVeta</p>
+      <p>
+        Ingeniería y artesanía en madera. Proyectos a medida con medición técnica, presupuesto cerrado y fabricación propia.
+      </p>
+      <ul class="site-footer__social">
+        {
+          socialLinks.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                rel="noopener noreferrer"
+                target="_blank"
+                aria-label={`${item.label}: ${item.handle}`}
+              >
+                <SocialIcon network={item.id} />
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Pie de página">
+      <a href="/#servicios">Servicios</a>
+      <a href="/#proceso">Proceso</a>
+      <a href="/#taller">El Taller</a>
+      <a href="/#preguntas">Preguntas</a>
+      <a href={WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer">
+        Presupuesto
+      </a>
+    </nav>
+
+    <div class="site-footer__contact">
+      <p>
+        <a href={WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer">
+          WhatsApp {WHATSAPP_PHONE_DISPLAY}
+        </a>
+      </p>
+      <p>
+        <a href={`tel:${WHATSAPP_PHONE_TEL}`}>{WHATSAPP_PHONE_DISPLAY}</a>
+      </p>
+      <p><a href="mailto:carpenterveta05092026@gmail.com">carpenterveta05092026@gmail.com</a></p>
+      <p>Lunes a viernes · 9:00–18:00</p>
+    </div>
+  </div>
+  <div class="wrap site-footer__legal">
+    <p>© {year} CarpenterVeta. Todos los derechos reservados.</p>
+    <p>Instagram · TikTok · Fabricación propia</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #0f1311;
+    color: rgba(232, 235, 230, 0.78);
+    padding-block: var(--space-5) var(--space-4);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2rem;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid rgba(242, 244, 240, 0.1);
+  }
+
+  .site-footer__logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: #f2f4f0;
+    margin: 0 0 0.85rem;
+  }
+
+  .site-footer__brand > p:nth-of-type(2) {
+    max-width: 34ch;
+    margin: 0;
+  }
+
+  .site-footer__social {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.35rem;
+  }
+
+  .site-footer__social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(242, 244, 240, 0.16);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: #f2f4f0;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.03em;
+    transition:
+      border-color 220ms var(--ease),
+      color 220ms var(--ease),
+      background-color 220ms var(--ease);
+  }
+
+  .site-footer__social a:hover {
+    color: var(--brass-soft);
+    border-color: rgba(196, 165, 116, 0.55);
+    background: rgba(242, 244, 240, 0.04);
+  }
+
+  .site-footer__nav {
+    display: grid;
+    gap: 0.55rem;
+    align-content: start;
+  }
+
+  .site-footer__nav a,
+  .site-footer__contact a {
+    text-decoration: none;
+    color: #f2f4f0;
+  }
+
+  .site-footer__nav a:hover,
+  .site-footer__contact a:hover {
+    color: var(--brass-soft);
+  }
+
+  .site-footer__contact p {
+    margin: 0 0 0.45rem;
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .site-footer__legal p {
+    margin: 0;
+  }
+
+  @media (max-width: 800px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

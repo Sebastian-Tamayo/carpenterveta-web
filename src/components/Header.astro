@@ -1,0 +1,282 @@
+---
+import { WHATSAPP_CTA_URL } from "../lib/whatsapp";
+
+interface Props {
+  /** "over-dark" = hero con imagen oscura; "light" = páginas internas */
+  tone?: "over-dark" | "light";
+}
+
+const { tone = "over-dark" } = Astro.props;
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#proceso", label: "Proceso" },
+  { href: "/#taller", label: "El Taller" },
+  { href: "/#preguntas", label: "Preguntas" },
+];
+---
+
+<header class:list={["site-header", { "is-light": tone === "light" }]} data-header>
+  <div class="site-header__inner wrap">
+    <a class="logo" href="/" aria-label="CarpenterVeta — inicio">
+      <span class="logo__mark" aria-hidden="true"></span>
+      <span class="logo__word">CarpenterVeta</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-principal"
+      data-nav-toggle
+    >
+      <span class="sr-only">Abrir menú</span>
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+    </button>
+
+    <nav class="nav" id="nav-principal" data-nav>
+      <ul class="nav__list">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={[{ "is-active": pathname === link.href }]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        class="btn btn--compact"
+        href={WHATSAPP_CTA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Pedir presupuesto
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector("[data-header]");
+  const toggle = document.querySelector("[data-nav-toggle]");
+  const nav = document.querySelector("[data-nav]");
+
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute("aria-expanded", String(open));
+    nav?.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  };
+
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    setOpen(!open);
+  });
+
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setOpen(false));
+  });
+
+  const onScroll = () => {
+    header?.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    height: var(--header-h);
+    transition:
+      background-color 280ms var(--ease),
+      backdrop-filter 280ms var(--ease),
+      box-shadow 280ms var(--ease);
+  }
+
+  .site-header.is-scrolled,
+  .site-header.is-light {
+    background: rgba(238, 240, 236, 0.88);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--ink);
+    z-index: 2;
+  }
+
+  .site-header:not(.is-scrolled):not(.is-light) .logo {
+    color: #f2f4f0;
+  }
+
+  .logo__mark {
+    width: 0.85rem;
+    height: 0.85rem;
+    background: var(--brass);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+
+  .logo__word {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: 1.35rem;
+    list-style: none;
+  }
+
+  .nav__list a {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.88;
+  }
+
+  .nav__list a:hover {
+    opacity: 1;
+  }
+
+  .site-header:not(.is-scrolled):not(.is-light) .nav__list a {
+    color: #f2f4f0;
+  }
+
+  .btn--compact {
+    min-height: 2.6rem;
+    padding: 0.55rem 1.15rem;
+    font-size: 0.85rem;
+  }
+
+  .site-header:not(.is-scrolled):not(.is-light) .btn--compact {
+    --btn-bg: #f2f4f0;
+    --btn-fg: var(--ink);
+  }
+
+  .nav-toggle {
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgba(242, 244, 240, 0.35);
+    border-radius: var(--radius);
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .site-header.is-scrolled .nav-toggle,
+  .site-header.is-light .nav-toggle {
+    border-color: var(--line-strong);
+  }
+
+  .nav-toggle__bars,
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    display: block;
+    width: 1.15rem;
+    height: 2px;
+    margin: 0 auto;
+    background: currentColor;
+    transition: transform 220ms var(--ease);
+  }
+
+  .site-header:not(.is-scrolled):not(.is-light) .nav-toggle {
+    color: #f2f4f0;
+  }
+
+  .site-header.is-scrolled .nav-toggle,
+  .site-header.is-light .nav-toggle {
+    color: var(--ink);
+  }
+
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    content: "";
+  }
+
+  .nav-toggle__bars::before {
+    transform: translateY(-6px);
+  }
+
+  .nav-toggle__bars::after {
+    transform: translateY(4px);
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle {
+      display: grid;
+      place-items: center;
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+      padding: var(--pad-inline);
+      background: rgba(18, 23, 20, 0.96);
+      color: #f2f4f0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 280ms var(--ease),
+        visibility 280ms var(--ease);
+    }
+
+    .nav.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .nav__list {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .nav__list a {
+      font-size: 1.35rem;
+      color: #f2f4f0;
+    }
+
+    .btn--compact {
+      --btn-bg: #f2f4f0;
+      --btn-fg: var(--ink);
+    }
+  }
+</style>

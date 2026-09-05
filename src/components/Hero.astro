@@ -1,0 +1,194 @@
+---
+import { WHATSAPP_CTA_URL } from "../lib/whatsapp";
+
+const badges = [
+  "Fabricación propia",
+  "Medición por técnicos",
+  "Presupuesto cerrado",
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__media" aria-hidden="true">
+    <img
+      src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=2400&q=80"
+      alt=""
+      width="2400"
+      height="1600"
+      fetchpriority="high"
+    />
+  </div>
+
+  <div class="hero__veil" aria-hidden="true"></div>
+
+  <div class="hero__content wrap">
+    <p class="hero__brand">CarpenterVeta</p>
+    <h1 id="hero-title">Ingeniería y artesanía en madera. Proyectos a medida sin sorpresas.</h1>
+    <p class="hero__lead">
+      Cada encargo empieza con medición técnica en tu espacio, planos claros y un presupuesto cerrado antes de fabricar.
+      Profesionalidad de taller con el rigor de un proyecto de ingeniería.
+    </p>
+    <div class="btn-group">
+      <a
+        class="btn btn--on-dark"
+        href={WHATSAPP_CTA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Solicitar presupuesto
+      </a>
+      <a class="btn btn--ghost-on-dark" href="#proceso">Ver cómo trabajamos</a>
+    </div>
+    <ul class="hero__badges" aria-label="Garantías CarpenterVeta">
+      {
+        badges.map((label) => (
+          <li>
+            <span class="hero__badge-mark" aria-hidden="true"></span>
+            {label}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    color: #f2f4f0;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    transform: scale(1.06);
+    animation: hero-ken 18s var(--ease) both;
+  }
+
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(18, 23, 20, 0.45) 0%,
+        rgba(18, 23, 20, 0.25) 38%,
+        rgba(18, 23, 20, 0.82) 100%
+      ),
+      linear-gradient(90deg, rgba(18, 23, 20, 0.55) 0%, transparent 55%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    padding-block: calc(var(--header-h) + 3rem) clamp(3.5rem, 8vh, 6rem);
+    max-width: 42rem;
+    margin-right: auto;
+    margin-left: var(--pad-inline);
+    width: min(100% - (var(--pad-inline) * 2), 42rem);
+    animation: hero-rise 900ms var(--ease) both;
+  }
+
+  .hero__brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2rem, 5.2vw, 3.5rem);
+    letter-spacing: 0.02em;
+    line-height: 0.95;
+    margin: 0 0 1.1rem;
+    color: #f7f8f5;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(1.55rem, 2.4vw + 0.8rem, 2.35rem);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    color: #f2f4f0;
+    max-width: 22ch;
+    margin-bottom: 0.85rem;
+  }
+
+  .hero__lead {
+    margin: 0;
+    max-width: 38ch;
+    color: rgba(242, 244, 240, 0.82);
+    font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.2rem);
+  }
+
+  .hero__badges {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.35rem;
+    margin: 1.75rem 0 0;
+    padding: 1.15rem 0 0;
+    border-top: 1px solid rgba(242, 244, 240, 0.18);
+  }
+
+  .hero__badges li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+    color: rgba(242, 244, 240, 0.92);
+  }
+
+  .hero__badge-mark {
+    width: 0.45rem;
+    height: 0.45rem;
+    background: var(--brass-soft);
+    flex-shrink: 0;
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-ken {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hero__content {
+      margin-left: auto;
+      width: min(100% - (var(--pad-inline) * 2), var(--max));
+    }
+
+    .hero__brand {
+      letter-spacing: 0.01em;
+    }
+
+    .hero__badges {
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+  }
+</style>

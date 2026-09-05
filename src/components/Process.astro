@@ -1,0 +1,138 @@
+---
+const steps = [
+  {
+    title: "Medición",
+    text: "Un técnico visita tu domicilio, toma medidas reales y detecta descuadres, instalaciones y limitaciones del espacio antes de diseñar.",
+  },
+  {
+    title: "Presupuesto cerrado",
+    text: "Recibes propuesta con materiales, plazos e importe fijo por escrito. Sin sobrecostes de última hora ni partidas ocultas.",
+  },
+  {
+    title: "Fabricación en taller",
+    text: "Cortamos, ensamblamos y acabamos en nuestro taller con control de calidad propio. Puedes seguir el avance en El Taller.",
+  },
+  {
+    title: "Montaje limpio",
+    text: "Instalamos en tu casa con cuidado: protección de suelos, ajuste fino de herrajes y revisión conjunta antes de cerrar el proyecto.",
+  },
+];
+---
+
+<section class="process section" id="proceso" aria-labelledby="proceso-title">
+  <div class="wrap">
+    <header class="process__intro reveal">
+      <span class="section__eyebrow">Proceso</span>
+      <h2 class="section__title" id="proceso-title">Cuatro pasos. Cero incertidumbre.</h2>
+      <p class="section__lead">
+        Sabes qué ocurre en cada fase, qué decides tú y cuándo llega el montaje — sin tener que preguntar.
+      </p>
+    </header>
+
+    <ol class="process__steps">
+      {
+        steps.map((step, index) => (
+          <li class="process__step reveal" style={`--i: ${index}`}>
+            <span class="process__num" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process {
+    background:
+      linear-gradient(180deg, rgba(30, 58, 47, 0.04), transparent 40%),
+      var(--bg-elevated);
+  }
+
+  .process__intro {
+    margin-bottom: var(--space-5);
+  }
+
+  .process__steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    counter-reset: none;
+  }
+
+  .process__step {
+    padding: 0 clamp(1rem, 2vw, 1.75rem) 0 0;
+    border-right: 1px solid var(--line);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  .process__step:first-child {
+    padding-left: 0;
+  }
+
+  .process__step:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .process__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--brass);
+    margin-bottom: 1rem;
+  }
+
+  .process__step h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .process__step p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .process__steps {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 1.5rem;
+    }
+
+    .process__step,
+    .process__step:last-child {
+      border-right: 0;
+      padding: 0;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1.5rem;
+    }
+
+    .process__step:nth-last-child(-n + 2) {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .process__steps {
+      grid-template-columns: 1fr;
+    }
+
+    .process__step {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1.5rem;
+    }
+
+    .process__step:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+</style>
