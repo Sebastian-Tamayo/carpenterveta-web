@@ -90,6 +90,12 @@ npm run preview    # previsualiza el estático localmente
 
 Despliega la carpeta `dist/` en Netlify (Drag & Drop o CI).
 
+<img width="1377" height="465" alt="Directus4" src="https://github.com/user-attachments/assets/05117a5f-b201-4afb-9d9a-48f73acde08f" />
+<img width="1497" height="735" alt="Directus3" src="https://github.com/user-attachments/assets/22863fd7-1fa4-48de-8fbb-fe203add1062" />
+<img width="1526" height="707" alt="Directus2" src="https://github.com/user-attachments/assets/bd34e009-c8a6-41c7-ade5-21fa44980fc5" />
+<img width="1027" height="552" alt="Directus1" src="https://github.com/user-attachments/assets/be9a1c1a-db07-4f16-af82-7ea8444d46d5" />
+[página.webm](https://github.com/user-attachments/assets/06ec88d3-6f3d-4151-9c1b-57c668a6f5a2)
+
 ---
 
 ## Contacto de la marca
